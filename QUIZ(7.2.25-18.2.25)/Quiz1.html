@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            background:url('ammu.jpg') no-repeat center center fixed;
+            background-size:cover;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 28px;
+            color: #51d812;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            gap: 20px;
+        }
+        .box {
+            width: 300px;
+            height: 100px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            gap: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .box:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
+        }
+        .box img {
+            width: 60px;
+            height: 60px;
+        }
+        .html { border-color: #E44D26; color: #E44D26; }
+        .css { border-color: #264DE4; color: #264DE4; }
+        .js { border-color: #F7DF1E; color: #F7DF1E; }
+    </style>
+</head>
+<body>
+
+    <h1>Select a Frontend Language Quiz</h1>
+
+    <div class="container">
+        <div class="box html" onclick="redirectToQuiz('html')">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML Logo">
+            HTML Quiz
+        </div>
+        <div class="box css" onclick="redirectToQuiz('css')">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS Logo">
+            CSS Quiz
+        </div>
+        <div class="box js" onclick="redirectToQuiz('js')">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Logo">
+            JavaScript Quiz
+        </div>
+    </div>
+
+    <script>
+        function redirectToQuiz(language) {
+            let quizPage = "";
+            switch (language) {
+                case "html":
+                    quizPage = "html_quiz.html";  // Change to actual quiz URL
+                    break;
+                case "css":
+                    quizPage = "css_quiz.html";  // Change to actual quiz URL
+                    break;
+                case "js":
+                    quizPage = "javascript_quiz.html";  // Change to actual quiz URL
+                    break;
+                default:
+                    alert("Invalid selection!");
+                    return;
+            }
+            window.location.href = quizPage;
+        }
+    </script>
+
+</body>
+</html>

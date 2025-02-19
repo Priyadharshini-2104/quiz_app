@@ -1,0 +1,99 @@
+<!---sign in page--->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background:url('pro3.jpg') no-repeat center center fixed;
+    background-size:cover;
+    color: black;
+}
+
+.container {
+    width: 300px;
+    background: white;
+    padding: 20px;
+    margin: 100px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #e03e50;
+}
+
+p a {
+    color: #ff4b5c;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+#error-msg {
+    color: red;
+}
+</style>
+</head>
+<body>
+    <script>
+        // Function to handle signup
+function signup() {
+    const username = document.getElementById("signup-username").value;
+    const password = document.getElementById("signup-password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+
+    if (!username || !password || !confirmPassword) {
+        document.getElementById("signup-error").innerText = "All fields are required!";
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        document.getElementById("signup-error").innerText = "Passwords do not match!";
+        return;
+    }
+
+    // Save user details in localStorage
+    localStorage.setItem("username", username);
+    localStorage.setItem("password", password);
+
+    alert("Signup successful! Redirecting to login...");
+    window.location.href = "LOGINQ.html";
+}
+</script>
+    <div class="container">
+        <h2>Sign Up</h2>
+
+        <input type="text" id="signup-username" placeholder="User name">
+        <input type="password" id="signup-password" placeholder="Password">
+        <input type="password" id="confirm-password" placeholder="Confirm Password">
+        <button onclick="signup()">Sign Up</button>
+        <p>Already have an account? <a href="LOGINQ.html">Login here</a></p>
+        <p id="signup-error"></p>
+    </div> 
+</body>
+</html>

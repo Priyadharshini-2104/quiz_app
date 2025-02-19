@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background:url('pro3.jpg') no-repeat center center fixed;
+    background-size:cover;
+    color: black;
+}
+
+.container {
+    width: 300px;
+    background:white;
+    padding: 20px;
+    margin: 100px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #e03e50;
+}
+
+p a {
+    color: #ff4b5c;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+#error-msg {
+    color: red;
+}
+</style>
+</head>
+<body>
+   <script>
+    // Function to handle login
+function login() {
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+
+    const storedUsername = localStorage.getItem("username");
+    const storedPassword = localStorage.getItem("password");
+
+    if (username === storedUsername && password === storedPassword) {
+        alert("Login successful!");
+        window.location.href = "home.html"; // Redirect to home page (You need to create home.html)
+    } else {
+        document.getElementById("login-error").innerText = "Invalid username or password!";
+    }
+}
+</script>
+<div class="container">
+    <h2>Login</h2>
+    <input type="text" id="login-username" placeholder="User name">
+    <input type="password" id="login-password" placeholder="Password">
+    <p><a href="#">Forgot Password?</a></p>
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <a href="sign_in.html">Sign Up</a></p>
+    <p id="login-error"></p>
+</div>
+</body>
+</html>

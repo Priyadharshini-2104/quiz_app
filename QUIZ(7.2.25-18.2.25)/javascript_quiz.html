@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Quiz</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            background: url('ammu.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: rgb(109, 252, 52);
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .question-box {
+            width: 400px;
+            padding: 20px;
+            border: 4px solid cyan;
+            border-radius: 10px;
+            background: black;
+            box-shadow: 0 0 10px cyan;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .question-mark {
+            font-size: 30px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: cyan;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: yellow;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .option, .level-button, #restart {
+            background: black;
+            border: 3px solid blue;
+            color: cyan;
+            font-size: 18px;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px blue;
+            transition: 0.3s;
+        }
+
+        .option:hover, .level-button:hover, #restart:hover {
+            background: cyan;
+            color: black;
+        }
+
+        .correct {
+            background: green !important;
+            color: white !important;
+        }
+
+        .wrong {
+            background: red !important;
+            color: white !important;
+        }
+
+        #feedback {
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        #score {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: yellow;
+        }
+
+        #restart {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    const allQuestions = {
+        Easy: [
+        { question: "Which keyword is used to declare a variable in JavaScript?", options: ["var", "let", "const", "All of the above"], answer: 3 },
+            { question: "What is the correct syntax for referring to an external script called 'script.js'?", options: ["<script src='script.js'>", "<script href='script.js'>", "<script link='script.js'>", "<script ref='script.js'>"], answer: 0 },
+            { question: "Which method is used to display a message in an alert box?", options: ["msg()", "alert()", "message()", "notify()"], answer: 1 },
+            { question: "What is the output of 'typeof 42'?", options: ["number", "string", "boolean", "object"], answer: 0 },
+            { question: "Which symbol is used for comments in JavaScript?", options: ["//", "/* */", "#", "--"], answer: 0 },
+            { question: "Which function is used to print something in the console?", options: ["console.print()", "log.console()", "console.log()", "print.console()"], answer: 2 },
+            { question: "How do you write 'Hello World' in an alert box?", options: ["alertBox('Hello World');", "alert('Hello World');", "msg('Hello World');", "print('Hello World');"], answer: 1 },
+            { question: "What is the correct syntax to create a function in JavaScript?", options: ["function = myFunction()", "function myFunction()", "create myFunction()", "def myFunction()"], answer: 1 },
+            { question: "How do you declare an array in JavaScript?", options: ["let arr = [];", "let arr = {}", "let arr = ()", "let arr = <>"], answer: 0 },
+            { question: "Which of the following is a JavaScript framework?", options: ["React", "Laravel", "Django", "Spring"], answer: 0 }
+
+        ],
+        Medium: [
+        { question: "What will '3' + 2 evaluate to?", options: ["5", "32", "NaN", "Error"], answer: 1 },
+            { question: "Which operator is used to compare both value and type?", options: ["==", "===", "!=", "!=="], answer: 1 },
+            { question: "What is the purpose of 'JSON.stringify()'?", options: ["Convert a JSON object to a string", "Parse a string into JSON", "Convert JavaScript to HTML", "Store JSON in local storage"], answer: 0 },
+            { question: "Which method adds an element to the end of an array?", options: ["push()", "unshift()", "pop()", "concat()"], answer: 0 },
+            { question: "How do you write an IF statement in JavaScript?", options: ["if x > y then", "if (x > y)", "if x > y {}", "if x > y :"], answer: 1 },
+            { question: "Which event occurs when the user clicks on an HTML element?", options: ["onmouseover", "onchange", "onload", "onclick"], answer: 3 },
+            { question: "What does 'localStorage' do?", options: ["Stores data temporarily", "Stores data permanently in the browser", "Stores data in the server", "Deletes data automatically"], answer: 1 },
+            { question: "How do you round the number 4.7 to the nearest integer?", options: ["Math.round(4.7)", "round(4.7)", "Math.ceil(4.7)", "Math.floor(4.7)"], answer: 0 },
+            { question: "Which loop is best suited when the number of iterations is known?", options: ["for", "while", "do-while", "foreach"], answer: 0 },
+            { question: "Which keyword is used to define an asynchronous function?", options: ["async", "await", "setTimeout", "promise"], answer: 0 }
+            ],
+        Hard: [
+        { question: "What does the 'bind()' method do?", options: ["Binds a function to an object", "Creates a new array", "Sorts an array", "Executes a function immediately"], answer: 0 },
+            { question: "Which of these is NOT a valid JavaScript data type?", options: ["String", "Boolean", "Float", "Undefined"], answer: 2 },
+            { question: "What does the 'this' keyword refer to in a regular function?", options: ["The function itself", "The global object", "The parent object", "Undefined"], answer: 1 },
+            { question: "Which function is used to convert a string to a number?", options: ["parseInt()", "toNumber()", "convert()", "int()"], answer: 0 },
+            { question: "What does the 'reduce()' method do?", options: ["Flattens an array", "Applies a function on an array", "Filters an array", "Sorts an array"], answer: 1 },
+            { question: "Which function is used to delay execution in JavaScript?", options: ["setTimeout()", "setInterval()", "delay()", "wait()"], answer: 0 },
+            { question: "Which of the following methods returns the keys of an object?", options: ["Object.values()", "Object.keys()", "Object.entries()", "Object.getKeys()"], answer: 1 },
+            { question: "What is a closure in JavaScript?", options: ["A function inside another function", "A function with no parameters", "A function that only executes once", "A function with global scope"], answer: 0 },
+            { question: "Which operator is used for exponentiation?", options: ["^", "", "exp()", "Math.exp()"], answer: 1 },
+            { question: "Which method removes the last element from an array?", options: ["shift()", "splice()", "pop()", "delete()"], answer: 2 }
+        ],
+    };
+
+    let selectedLevel = "";
+    let questions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timer;
+    let timeLeft = 10;
+
+    function startQuiz(level) {
+        selectedLevel = level;
+        questions = [...allQuestions[level]];
+        shuffleQuestions();
+        document.getElementById("level-selection").style.display = "none";
+        document.getElementById("quiz-container").style.display = "block";
+        loadQuestion();
+    }
+
+    function shuffleQuestions() {
+        questions.sort(() => Math.random() - 0.5);
+    }
+
+    function startTimer() {
+        clearInterval(timer);
+        timeLeft = 10;
+        document.getElementById("time").innerText = timeLeft;
+
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                showAnswer(null);
+            }
+        }, 1000);
+    }
+
+    function loadQuestion() {
+        if (currentQuestionIndex >= questions.length) {
+            showFinalScore();
+            return;
+        }
+
+        const questionElement = document.getElementById("question");
+        const optionButtons = document.querySelectorAll(".option");
+        const feedbackElement = document.getElementById("feedback");
+
+        feedbackElement.innerText = "";
+
+        const currentQuestion = questions[currentQuestionIndex];
+        questionElement.innerText = currentQuestion.question;
+
+        let shuffledOptions = [...currentQuestion.options];
+        shuffledOptions.sort(() => Math.random() - 0.5);
+
+        optionButtons.forEach((button, index) => {
+            button.innerText = shuffledOptions[index];
+            button.classList.remove("correct", "wrong");
+            button.dataset.correct = shuffledOptions[index] === currentQuestion.options[currentQuestion.answer];
+        });
+
+        startTimer();
+    }
+
+    function selectAnswer(index) {
+    clearInterval(timer);
+    const selectedButton = document.querySelectorAll(".option")[index];
+    const feedbackElement = document.getElementById("feedback");
+    const currentQuestion = questions[currentQuestionIndex];
+
+    // Check if the answer is correct
+    if (selectedButton.dataset.correct === "true") {
+        selectedButton.classList.add("correct");
+        score++;
+
+        // Using simple concatenation to avoid errors
+        feedbackElement.innerText = "Correct! Well done on the " + (selectedLevel || "selected") + " question!";
+    } else {
+        selectedButton.classList.add("wrong");
+        feedbackElement.innerText = "Wrong! The correct answer was: " + currentQuestion.options[currentQuestion.answer];
+    }
+
+    // Delay before loading the next question
+    setTimeout(function () {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            showFinalScore();  // Show final score when all questions are done
+        }
+    }, 1000);
+}
+
+// Function to display final score
+function showFinalScore() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("score").innerText = "You scored " + score + " out of " + questions.length + " in " + (selectedLevel || "this") + " level!";
+    document.getElementById("restart").style.display = "block";
+}
+
+// Function to restart the quiz
+function restartQuiz() {
+    document.getElementById("score").innerText = "";
+    document.getElementById("restart").style.display = "none";
+    document.getElementById("level-selection").style.display = "block";
+    
+    score = 0;
+    currentQuestionIndex = 0;
+}
+</script>
+
+    <!-- Level Selection -->
+    <div id="level-selection" class="container">
+        <h2>Select a Level</h2>
+        <button class="level-button" onclick="startQuiz('Easy')">Easy</button>
+        <button class="level-button" onclick="startQuiz('Medium')">Medium</button>
+        <button class="level-button" onclick="startQuiz('Hard')">Hard</button>
+    </div>
+
+    <!-- Quiz Container -->
+    <div id="quiz-container" class="container" style="display: none;">
+        <div class="question-box">
+            <span class="question-mark">?</span>
+            <p id="question">Loading...</p>
+        </div>
+        <div id="timer">Time left: <span id="time">10</span> sec</div>
+        <div class="options">
+            <button class="option" onclick="selectAnswer(0)"></button>
+            <button class="option" onclick="selectAnswer(1)"></button>
+            <button class="option" onclick="selectAnswer(2)"></button>
+            <button class="option" onclick="selectAnswer(3)"></button>
+        </div>
+        <p id="feedback"></p>
+    </div>
+
+    <p id="score"></p>
+    <button id="restart" onclick="restartQuiz()">Restart Quiz</button>
+
+</body>
+</html> 
